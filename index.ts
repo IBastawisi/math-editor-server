@@ -19,12 +19,17 @@ const app = express();
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(express.json());
 
+// trust proxy (https://stackoverflow.com/questions/64958647/express-not-sending-cross-domain-cookies)
+app.set("trust proxy", 1);
+
 app.use(
   session({
     secret: SECRET!,
     resave: true,
     saveUninitialized: true,
     cookie: {
+      sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
     }
   })
