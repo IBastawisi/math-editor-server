@@ -6,8 +6,19 @@ const router = Router()
 import { Document, User } from '../models'
 
 router.get('/me', async (req, res) => {
-  const user = req.user;
-  res.json(user || null);
+  const userId = (req.user as User)?.id;
+  if (!userId) {
+    return res.json(null)
+  }
+  const user = await User.findByPk(userId, {
+    include: {
+      model: Document,
+      attributes: {
+        exclude: ['userId, data']
+      }
+    }
+  });
+  res.json(user);
 })
 
 router.get('/', isAdmin, async (req, res) => {

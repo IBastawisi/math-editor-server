@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+import bodyParser from "body-parser";
 import session from 'express-session';
 import passport from 'passport';
 
@@ -17,6 +18,7 @@ import { PORT, SECRET, FRONTEND_URL } from './config/env';
 const app = express();
 
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json());
 
 // trust proxy (https://stackoverflow.com/questions/64958647/express-not-sending-cross-domain-cookies)
@@ -41,6 +43,10 @@ app.use(passport.session());
 app.use('/auth', loginRouter);
 app.use('/api/documents', documentsRouter);
 app.use('/api/users', usersRouter);
+
+app.get('*', (req, res) => {
+  res.send(`<a href="${FRONTEND_URL}">Math Editor</a> API Server`);
+})
 
 app.use(errorHandler);
 

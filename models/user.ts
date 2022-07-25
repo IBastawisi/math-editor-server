@@ -1,7 +1,7 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript'
 import Document from './document';
 
-@Table({ tableName: 'users', timestamps: true })
+@Table({ tableName: 'users', underscored: true, timestamps: true })
 class User extends Model {
   @Column({ primaryKey: true, type: DataType.UUID, defaultValue: DataType.UUIDV4, })
   id: string;
