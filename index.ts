@@ -3,6 +3,8 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 import session from 'express-session';
 import passport from 'passport';
+import * as swaggerUi from 'swagger-ui-express';
+import * as fs from 'fs';
 
 import { connectToDatabase } from './config/db';
 import './passport';
@@ -42,8 +44,11 @@ app.use('/auth', loginRouter);
 app.use('/documents', documentsRouter);
 app.use('/users', usersRouter);
 
+const swaggerDocument = JSON.parse(fs.readFileSync(process.cwd() + "/swagger/swagger.json", 'utf8'));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
+
 app.get('*', (req, res) => {
-  res.send(`<a href="${FRONTEND_URL}">Math Editor</a> API Server`);
+  res.redirect('/docs');
 })
 
 app.use(errorHandler);

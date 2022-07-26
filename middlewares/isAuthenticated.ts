@@ -13,7 +13,7 @@ const isAuthenticated: RequestHandler = async (req, res, next) => {
 };
 
 function assertUser(req: Request): asserts req is AuthorizedRequest {
-  if (!req.user) throw new Error("You are not authenticated");
+  if (!req.user) throw new Error("Unauthorized");
 }
 
 export default isAuthenticated;

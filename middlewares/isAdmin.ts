@@ -8,13 +8,13 @@ const isAdmin: RequestHandler = async (req, res, next) => {
     assertAdmin(req);
     next();
   } catch (error: any) { 
-    res.status(401).send(error.message);
+    res.status(403).send(error.message);
   }
 };
 
 function assertAdmin(req: Request): asserts req is AuthorizedRequest {
   const user = req.user as User;
-  if (!user?.admin) throw new Error("Not Allowed");
+  if (!user?.admin) throw new Error("Forbidden");
 }
 
 export default isAdmin;

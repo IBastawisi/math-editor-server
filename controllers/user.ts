@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import isAdmin from '../middlewares/isAdmin';
+import 'express-async-errors';
+import { validate } from "uuid";
 
 const router = Router()
 
@@ -14,7 +16,7 @@ router.get('/me', async (req, res) => {
     include: {
       model: Document,
       attributes: {
-        exclude: ['userId, data']
+        exclude: ['userId','data']
       }
     }
   });
@@ -25,14 +27,28 @@ router.get('/', isAdmin, async (req, res) => {
   const users = await User.findAll({
     include: {
       model: Document,
-      attributes: ['id']
+      attributes: {
+        exclude: ['userId','data']
+      }
     }
   })
   res.json(users)
 })
 
 router.get('/:id', isAdmin, async (req, res) => {
-  const user = await User.findByPk(req.params.id)
+  if (!validate(req.params.id)) {
+    return res.status(400).json({
+      error: 'invalid id'
+    })
+  }
+  const user = await User.findByPk(req.params.id, {
+    include: {
+      model: Document,
+      attributes: {
+        exclude: ['userId', 'data']
+      }
+    }
+  })
   if (user) {
     res.json(user)
   } else {
