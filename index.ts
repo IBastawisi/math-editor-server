@@ -41,8 +41,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', loginRouter);
-app.use('/api/documents', documentsRouter);
-app.use('/api/users', usersRouter);
+app.use('/documents', documentsRouter);
+app.use('/users', usersRouter);
 
 app.get('*', (req, res) => {
   res.send(`<a href="${FRONTEND_URL}">Math Editor</a> API Server`);
