@@ -6,10 +6,6 @@
     "title": "Math Editor API",
     "contact": {
       "email": "ibastawisi@outlook.com"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
   "schemes": [
