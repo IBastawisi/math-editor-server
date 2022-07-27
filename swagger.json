@@ -52,7 +52,7 @@
           "200": {
             "description": "Current user or null if not logged in",
             "schema": {
-              "$ref": "#/definitions/UserWithDocuments"
+              "$ref": "#/definitions/User"
             }
           }
         }
@@ -75,7 +75,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/UserWithDocuments"
+                "$ref": "#/definitions/User"
               }
             }
           },
@@ -105,7 +105,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/UserWithDocuments"
+              "$ref": "#/definitions/User"
             }
           },
           "400": {
@@ -377,9 +377,6 @@
         "id": {
           "type": "string"
         },
-        "googleId": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
@@ -388,64 +385,6 @@
         },
         "picture": {
           "type": "string"
-        },
-        "admin": {
-          "type": "boolean"
-        },
-        "disabled": {
-          "type": "boolean"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        }
-      }
-    },
-    "UserWithDocuments": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "googleId": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "picture": {
-          "type": "string"
-        },
-        "admin": {
-          "type": "boolean"
-        },
-        "disabled": {
-          "type": "boolean"
-        },
-        "documents": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              }
-            }
-          }
         },
         "createdAt": {
           "type": "string"

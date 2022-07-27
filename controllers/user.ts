@@ -13,6 +13,7 @@ router.get('/me', async (req, res) => {
     return res.json(null)
   }
   const user = await User.findByPk(userId, {
+    attributes: { exclude: ['googleId', 'admin', 'disabled'] },
     include: {
       model: Document,
       attributes: {
@@ -52,7 +53,7 @@ router.get('/:id', isAdmin, async (req, res) => {
   if (user) {
     res.json(user)
   } else {
-    res.status(404).end()
+    res.status(404).json({ error: 'user not found'}).end()
   }
 })
 
@@ -62,7 +63,7 @@ router.put('/:id', isAdmin, async (req, res) => {
     await user.update(req.body)
     res.json(user)
   } else {
-    res.status(404).end()
+    res.status(404).json({ error: 'user not found'}).end()
   }
 });
 

@@ -9,9 +9,8 @@ const router = Router();
 
 router.get('/', isAdmin, async (req, res) => {
   const documents = await Document.findAll({
-    include: {
-      model: User,
-      attributes: ['name']
+    attributes: {
+      exclude: ['data']
     }
   });
   return res.json(documents);
@@ -40,7 +39,7 @@ router.get('/:id', async (req, res) => {
   if (document) {
     return res.json(document)
   } else {
-    res.status(404).end()
+    res.status(404).json({ error: 'document not found'}).end()
   }
 });
 
@@ -66,7 +65,7 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     await document.update(req.body);
     return res.status(200).end();
   } else {
-    res.status(404).end()
+    res.status(404).json({ error: 'document not found' }).end()
   }
 });
 
@@ -78,7 +77,7 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
   }
   const document = await Document.findByPk(req.params.id);
   const user = req.user as User;
-  if(user.disabled) {
+  if (user.disabled) {
     return res.status(403).json({
       error: 'account disabled, please contact admin'
     })
