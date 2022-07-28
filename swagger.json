@@ -13,20 +13,6 @@
   ],
   "host": "api.matheditor.ml",
   "paths": {
-    "/auth/login": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Login",
-        "description": "Login",
-        "responses": {
-          "200": {
-            "description": "Login successful"
-          }
-        }
-      }
-    },
     "/auth/logout": {
       "get": {
         "tags": [
@@ -368,6 +354,13 @@
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "authorizationUrl": "https://api.matheditor.ml/auth/login",
+      "flow": "authorizationCode"
     }
   },
   "definitions": {
