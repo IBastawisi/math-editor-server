@@ -17,9 +17,12 @@ router.get('/me', async (req, res) => {
     include: {
       model: Document,
       attributes: {
-        exclude: ['userId','data']
-      }
-    }
+        exclude: ['userId', 'data']
+      },
+    },
+    order: [
+      ['documents', 'updatedAt', 'DESC']
+    ]
   });
   res.json(user);
 })
@@ -29,10 +32,14 @@ router.get('/', isAdmin, async (req, res) => {
     include: {
       model: Document,
       attributes: {
-        exclude: ['userId','data']
-      }
-    }
-  })
+        exclude: ['userId', 'data']
+      },
+    },
+    order: [
+      ['updatedAt', 'DESC'],
+      ['documents', 'updatedAt', 'DESC']
+    ]
+  });
   res.json(users)
 })
 
@@ -47,13 +54,16 @@ router.get('/:id', isAdmin, async (req, res) => {
       model: Document,
       attributes: {
         exclude: ['userId', 'data']
-      }
-    }
-  })
+      },
+    },
+    order: [
+      ['documents', 'updatedAt', 'DESC']
+    ]
+  });
   if (user) {
     res.json(user)
   } else {
-    res.status(404).json({ error: 'user not found'}).end()
+    res.status(404).json({ error: 'user not found' }).end()
   }
 })
 
@@ -63,7 +73,7 @@ router.put('/:id', isAdmin, async (req, res) => {
     await user.update(req.body)
     res.json(user)
   } else {
-    res.status(404).json({ error: 'user not found'}).end()
+    res.status(404).json({ error: 'user not found' }).end()
   }
 });
 

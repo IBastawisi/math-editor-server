@@ -11,7 +11,8 @@ router.get('/', isAdmin, async (req, res) => {
   const documents = await Document.findAll({
     attributes: {
       exclude: ['data']
-    }
+    },
+    order: [['updatedAt', 'DESC']]
   });
   return res.json(documents);
 });
